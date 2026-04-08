@@ -239,7 +239,7 @@
 
   <script src="assets/js/main.js"></script>
   
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function() {
         emailjs.init("ELFrx7vVcXdL9U6os"); 
@@ -251,14 +251,20 @@
         if(form) {
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Stops the page reload
-                alert("Sending message, please wait..."); // Tells you the button was clicked
+                
+                // Grab the button and change its text so we know it is working
+                const btn = form.querySelector('button[type="submit"]');
+                btn.innerHTML = "Sending...";
     
-                emailjs.sendForm('service_fq0mpjm', 'template_hnvn4u7', this)
+                // Send the email using the explicit form ID
+                emailjs.sendForm('service_fq0mpjm', 'template_hnvn4u7', '#contact-form')
                     .then(function() {
+                        btn.innerHTML = "Send Message"; // Reset button text
                         alert('SUCCESS! Your message has been sent!');
                         form.reset(); // Clears the form
                     }, function(error) {
-                        alert('FAILED! Error: ' + JSON.stringify(error));
+                        btn.innerHTML = "Send Message"; // Reset button text
+                        alert('FAILED! Check console. Error: ' + JSON.stringify(error));
                     });
             });
         }
